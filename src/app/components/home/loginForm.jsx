@@ -7,6 +7,7 @@ import AxiosInstance from '@/app/config/axiosInstance';
 import { addNotification } from '@/app/store/notificationStore';
 import { useAuthStore } from '@/app/store/authStore';
 import { LoadingIcon } from '@/app/utils/loadingIcon';
+import Image from 'next/image';
 
 export default function LoginForm() {
   const { setToken, setUser, token } = useAuthStore()
@@ -70,15 +71,16 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center overflow-hidden p-2 items-center h-screen bg-gray-100">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="w-96 bg-white shadow-lg rounded-2xl p-6">
-          <div className="text-center mb-6">
-            <h2 className="mb-2 text-xl text-violet-700 font-bold">ورود به پنل پزشکان</h2>
+        <div className="w-full lg:w-96 bg-white shadow-lg rounded-xl p-5 lg:p-6">
+          <div className="text-center flex items-center justify-center flex-col mb-6">
+            <Image src="/logo.png" width={40} height={40} alt="logo dr zosha" />
+            <h2 className="mb-2 text-md text-violet-900 font-bold">ورود به پنل پزشکان</h2>
           </div>
           {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}
           <div className="space-y-4">
