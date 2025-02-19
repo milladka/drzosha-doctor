@@ -1,6 +1,6 @@
 import NotificationPanel from "./components/NotificationPanel";
 import "./globals.css";
-import { localFont } from 'next/font/local';
+import  localFont from 'next/font/local';
 
 const iransans = localFont({
   src: [
