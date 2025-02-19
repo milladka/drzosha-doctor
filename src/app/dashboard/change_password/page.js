@@ -2,10 +2,16 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { motion } from "framer-motion";
+import AxiosInstance from "@/app/config/axiosInstance";
+import { useAuthStore } from "@/app/store/authStore";
+import { addNotification } from "@/app/store/notificationStore";
+import { LoadingIcon } from "@/app/utils/loadingIcon";
 
 export default function ChangePasswordPage() {
+    const { token } = useAuthStore();
     const [showPassword, setShowPassword] = useState({ old: false, new: false, confirm: false });
     const [passwords, setPasswords] = useState({ old: "", new: "", confirm: "" });
+    const [loading, setLoading] = useState(false);
 
     const toggleVisibility = (field) => {
         setShowPassword((prev) => ({ ...prev, [field]: !prev[field] }));
@@ -13,8 +19,34 @@ export default function ChangePasswordPage() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setPasswords((prev) => ({ ...prev, [name]: value }));
+        setPasswords((prev) => ({ ...prev, [name]: convertPersianToEnglishNumbers(value) }));
     };
+
+    const convertPersianToEnglishNumbers = (input) => {
+        const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        return input.replace(/[۰-۹]/g, (char) => persianNumbers.indexOf(char));
+    }
+
+    const submit = () => {
+        if (passwords.confirm != passwords.new) {
+            addNotification('رمز عبور جدید با تکرار آن برابر نیست', true);
+            return;
+        }
+        setLoading(true);
+        AxiosInstance.postForm('/doctor/change_password', passwords, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(res => {
+                if (!res.data.error) {
+                    addNotification(res.data.message, false);
+                    setPasswords((prev) => ({ ...prev, old: "", new: "", confirm: "" }));
+                    setLoading(false);
+                } else {
+                    addNotification(res.data.message, true);
+                    setLoading(false);
+                }
+            })
+    }
 
     return (
         <motion.div
@@ -49,9 +81,13 @@ export default function ChangePasswordPage() {
                         </div>
                     ))}
                     <div className="col-span-3 flex items-end justify-end">
-
-                        <button className=" w-full lg:w-32 p-2 bg-violet-600 hover:bg-violet-700 text-white text-sm rounded">
-                            تغییر رمز عبور
+                        <button disabled={loading} onClick={() => submit()} className="flex items-center justify-center w-full lg:w-32 p-2 bg-violet-600 hover:bg-violet-700 text-white text-sm rounded">
+                            {
+                                loading ?
+                                    <LoadingIcon width={'w-5'} />
+                                    :
+                                    <span>تغییر رمز عبور</span>
+                            }
                         </button>
                     </div>
                 </div>
