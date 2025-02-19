@@ -28,6 +28,10 @@ export default function ChangePasswordPage() {
     }
 
     const submit = () => {
+        if (!passwords.confirm && !passwords.old && !passwords.new) {
+            addNotification('تکمیل همه فیلد‌ها الزامی است', true);
+            return;
+        }
         if (passwords.confirm != passwords.new) {
             addNotification('رمز عبور جدید با تکرار آن برابر نیست', true);
             return;
