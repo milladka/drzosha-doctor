@@ -1,11 +1,12 @@
 "use client"
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Home, Settings, Menu, X, Ribbon, Stethoscope, LogOut, Tickets } from "lucide-react";
+import { Home, Menu, X, Ribbon, Stethoscope, LogOut, Tickets, KeyRound } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 import Link from "next/link";
 import { useAuthStore } from "../store/authStore";
+import Image from "next/image";
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -54,10 +55,10 @@ const Sidebar = () => {
 
     const menuItems = [
         { name: "داشبورد", icon: <Home size={18} />, link: "/dashboard" },
-        { name: "نوبت های ثبت شده", icon: <Tickets size={18} />, link: "/dashboard/appointments" },
+        { name: "نوبت های رزرو شده", icon: <Tickets size={18} />, link: "/dashboard/appointments" },
         { name: "ثبت نوبت", icon: <Ribbon size={18} />, link: "/dashboard/manage_appointments" },
         { name: "ویرایش پروفایل", icon: <Stethoscope size={18} />, link: "/dashboard/profile" },
-        { name: "تنظیمات", icon: <Settings size={18} />, link: "#" },
+        { name: "تغییر رمز عبور", icon: <KeyRound size={18} />, link: "/dashboard/change_password" },
     ];
 
     return (
@@ -133,7 +134,10 @@ const Sidebar = () => {
                     >
                         <Menu size={24} />
                     </button>
-                    <span className="text-lg font-bold">پنل پزشکان دکتر زوشا</span>
+                    <span className="text-lg font-bold flex items-center gap-2">
+                        <Image src="/logo.png" width={35} height={35} alt="logo dr zosha" />
+                        <span>پنل پزشکان دکتر زوشا</span>
+                    </span>
                 </div>
 
             </div>

@@ -82,18 +82,18 @@ export default function ProfilePage() {
                 <Info width={15} />
                 شما می‌توانید اطلاعات پایه پروفایل خود را از طریق پشتیبانی دکتر زوشا تغییر دهید
             </div>
-            <div className="grid grid-col-1 lg:grid-cols-2 gap-3">
-                <div>
+            <div className="grid lg:grid-cols-2 gap-4">
+                <div className="col-span-2 lg:col-span-1">
                     <label className="text-xs text-slate-500 mb-2 px-1 block">آدرس</label>
                     <input className="block w-full p-2 rounded border text-xs outline-none" defaultValue={data.address} onChange={(e) => setData((prev) => ({ ...prev, address: e.target.value }))} />
                 </div>
-                <div>
+                <div className="col-span-2 lg:col-span-1">
                     <label className="text-xs text-slate-500 mb-2 px-1 block">تلفن</label>
                     <input className="block w-full p-2 rounded border text-xs outline-none" defaultValue={data.phones} onChange={(e) => setData((prev) => ({ ...prev, phones: e.target.value }))} />
                 </div>
                 <div className="col-span-2">
                     <label className="text-xs text-slate-500 mb-2 px-1 block">محتوای درباره دکتر</label>
-                    <textarea style={{whiteSpace: 'pre-line'}} rows={20} className="block w-full p-2 rounded border text-sm outline-none leading-7" defaultValue={data.content} onChange={(e) => setData((prev) => ({ ...prev, content: e.target.value }))} ></textarea>
+                    <textarea style={{whiteSpace: 'pre-line'}} rows={15} className="block w-full p-2 rounded border text-sm outline-none leading-7" defaultValue={data.content} onChange={(e) => setData((prev) => ({ ...prev, content: e.target.value }))} ></textarea>
                 </div>
                 <div></div>
                 <div>
